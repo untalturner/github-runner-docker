@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   github-runner-develop:
     image: myoung34/github-runner:latest
@@ -10,6 +8,7 @@ services:
       - .env.develop
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks: []  # Explicitly no network
     deploy:
       resources:
         limits:
@@ -25,6 +24,7 @@ services:
       - .env.main
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks: []  # Explicitly no network
     deploy:
       resources:
         limits:

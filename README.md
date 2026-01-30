@@ -29,11 +29,12 @@ cp .env.main.example .env.main
 - Set `REPO_URL` per env.
 4. Start both runners:
 ```
-docker compose up -d
+docker compose --profile develop --profile main up -d
 ```
 5. Verify:
 ```
-docker compose logs -f
+docker logs -f github-runner-develop
+docker logs -f github-runner-main
 ```
 Check GitHub: Repo/org Settings > Actions > Runners.
 
