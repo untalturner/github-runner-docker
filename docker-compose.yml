@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  github-runner-develop:
+    image: myoung34/github-runner:latest
+    container_name: github-runner-develop
+    restart: unless-stopped
+    env_file:
+      - .env
+      - .env.develop
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    profiles: ["develop"]  # docker compose --profile develop up
+
+  github-runner-main:
+    image: myoung34/github-runner:latest
+    container_name: github-runner-main
+    restart: unless-stopped
+    env_file:
+      - .env
+      - .env.main
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    profiles: ["main"]  # docker compose --profile main up
