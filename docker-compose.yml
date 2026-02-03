@@ -1,11 +1,10 @@
 services:
-  github-runner-develop:
+  github-runner:
     image: myoung34/github-runner:latest
-    container_name: github-runner-develop
+    container_name: github-runner
     restart: unless-stopped
     env_file:
       - .env
-      - .env.develop
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks: []  # Explicitly no network
@@ -13,20 +12,3 @@ services:
       resources:
         limits:
           memory: 4G
-    profiles: ["develop"]  # docker compose --profile develop up
-
-  github-runner-main:
-    image: myoung34/github-runner:latest
-    container_name: github-runner-main
-    restart: unless-stopped
-    env_file:
-      - .env
-      - .env.main
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks: []  # Explicitly no network
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-    profiles: ["main"]  # docker compose --profile main up
