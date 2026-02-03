@@ -1,11 +1,10 @@
-# GitHub Actions Self-Hosted Runner (Docker Compose - Dual Ephemeral)
+# GitHub Actions Self-Hosted Runner (Docker Compose - Ephemeral)
 
-Ephemeral Docker-based self-hosted runners for GitHub Actions with Docker-in-Docker (DinD). Runs **develop** and **main** runners simultaneously on one host, distinguished by labels.
+Ephemeral Docker-based self-hosted runners for GitHub Actions with Docker-in-Docker (DinD).
 
 ## Features
 - **Ephemeral**: Auto-deregisters after each job (clean slate).
 - **DinD**: Docker socket mount for building/running containers.
-- **Dual runners**: Separate `develop`/`main` configs via env files.
 - **Maven/Java ready**: Works with your microservices workflows.
 
 ## Prerequisites
@@ -21,34 +20,16 @@ cd github-runner-docker
 2. Copy env files:
 ```
 cp .env.example .env
-cp .env.develop.example .env.develop
-cp .env.main.example .env.main
 ```
-3. Edit `.env`, `.env.develop`, `.env.main`:
+3. Edit `.env`:
 - Set `ACCESS_TOKEN` (base).
 - Set `REPO_URL` per env.
-4. Start both runners:
+4. Start runner:
 ```
-docker compose --profile develop --profile main up -d
+docker compose up -d
 ```
 5. Verify:
 ```
-docker logs -f github-runner-develop
-docker logs -f github-runner-main
+docker logs -f github-runner
 ```
 Check GitHub: Repo/org Settings > Actions > Runners.
-
-## Usage
-- **Workflow labels**:
-```
-yaml
-jobs:
- develop-job:
-   runs-on: [develop, self-hosted, docker, linux]
- main-job:
-   runs-on: [main, self-hosted, docker, linux]
-```
-- **Single profile**:
-```
-docker compose --profile develop up -d  # Only develop runner
-```
